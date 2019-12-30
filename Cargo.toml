@@ -1,13 +1,20 @@
 [package]
-name = "yew_web_worker_borrowmut_panic"
+name = "yew_web_workerborrowmut_panic"
 version = "0.1.0"
-authors = ["Henry Zimmerman <zimhen7@gmail.com>"]
+authors = ["Henry Zimmerman"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "main"
+path = "src/bin/main.rs"
+
+[[bin]]
+name = "native_worker"
+path = "src/bin/native_worker.rs"
 
 [dependencies]
+log = "0.4"
+web_logger = "0.1"
+serde = "1.0"
+serde_derive = "1.0"
 yew = {git = "https://github.com/yewstack/yew", branch = "master"}
-log = "0.4.8"
-web_logger = "0.2.0"
-serde = "1.0.104"
