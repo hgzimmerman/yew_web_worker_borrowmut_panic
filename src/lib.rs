@@ -43,7 +43,7 @@ impl Component for Model {
             Msg::SendToWorker => {
                 if let Some(worker) = self.worker.as_mut() {
 
-                    for _ in 0..5000 {
+                    for _ in 0..50 {
                         worker.send(native_worker::Request::Work);
                     }
                 } else {

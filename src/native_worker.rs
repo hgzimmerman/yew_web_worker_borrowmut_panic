@@ -18,7 +18,8 @@ pub enum Msg {
 
 pub struct Worker {
     link: AgentLink<Worker>,
-    state: usize
+    state: usize,
+    hidden: u32
 }
 
 impl Agent for Worker {
@@ -30,7 +31,8 @@ impl Agent for Worker {
     fn create(link: AgentLink<Self>) -> Self {
         Worker {
             link,
-            state: 0
+            state: 0,
+            hidden: 0
         }
     }
 
@@ -46,7 +48,7 @@ impl Agent for Worker {
 //        info!("Request: {:?}", msg);
         match msg {
             Request::Work => {
-                self.state += 1;
+                do_work(self);
                 self.link.respond(who, Response::CurrentState(self.state));
             }
         }
@@ -54,5 +56,23 @@ impl Agent for Worker {
 
     fn name_of_resource() -> &'static str {
         "bin/native_worker.js"
+    }
+}
+
+
+fn do_work(worker: &mut Worker) {
+
+    let x = fibonacci(35);
+    worker.hidden = worker.hidden.wrapping_add(x);
+    worker.state += 1;
+}
+
+
+#[no_mangle]
+fn fibonacci(n: u32) -> u32 {
+    match n {
+        0 => 1,
+        1 => 1,
+        _ => fibonacci(n - 1) + fibonacci(n - 2),
     }
 }
