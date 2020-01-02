@@ -66,6 +66,7 @@ impl Component for Model {
     }
 
     fn view(&self) -> Html {
+        if self.state > 1 {
         html! {
             <div>
                 <nav class="menu">
@@ -74,7 +75,20 @@ impl Component for Model {
                     <button onclick=self.link.callback(|_| Msg::CreateBridge)>{ "Create Bridge" }</button>
                 </nav>
                 {self.state}
+                    <Model/>
             </div>
+        }
+        } else {
+            html! {
+                <div>
+                    <nav class="menu">
+                        <button onclick=self.link.callback(|_| Msg::SendToWorker)>{ "Send to Thread" }</button>
+                        <button onclick=self.link.callback(|_| Msg::KillBridge)>{ "Destroy Bridge" }</button>
+                        <button onclick=self.link.callback(|_| Msg::CreateBridge)>{ "Create Bridge" }</button>
+                    </nav>
+                    {self.state}
+                </div>
+            }
         }
     }
 }
